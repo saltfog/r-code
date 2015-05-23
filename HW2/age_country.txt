@@ -1,0 +1,114 @@
+install.packages("devtools")
+also installing the dependencies ‘mime’, ‘R6’, ‘bitops’, ‘brew’, ‘httr’, ‘RCurl’, ‘memoise’, ‘whisker’, ‘evaluate’, ‘rstudioapi’, ‘jsonlite’, ‘roxygen2’
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/mime_0.2.tgz'
+Content type 'application/x-gzip' length 23135 bytes (22 Kb)
+opened URL
+==================================================
+downloaded 22 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/R6_2.0.1.tgz'
+Content type 'application/x-gzip' length 110632 bytes (108 Kb)
+opened URL
+==================================================
+downloaded 108 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/bitops_1.0-6.tgz'
+Content type 'application/x-gzip' length 23362 bytes (22 Kb)
+opened URL
+==================================================
+downloaded 22 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/brew_1.0-6.tgz'
+Content type 'application/x-gzip' length 98041 bytes (95 Kb)
+opened URL
+==================================================
+downloaded 95 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/httr_0.6.1.tgz'
+Content type 'application/x-gzip' length 373891 bytes (365 Kb)
+opened URL
+==================================================
+downloaded 365 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/RCurl_1.95-4.5.tgz'
+Content type 'application/x-gzip' length 718964 bytes (702 Kb)
+opened URL
+==================================================
+downloaded 702 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/memoise_0.2.1.tgz'
+Content type 'application/x-gzip' length 14357 bytes (14 Kb)
+opened URL
+==================================================
+downloaded 14 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/whisker_0.3-2.tgz'
+Content type 'application/x-gzip' length 47727 bytes (46 Kb)
+opened URL
+==================================================
+downloaded 46 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/evaluate_0.5.5.tgz'
+Content type 'application/x-gzip' length 37747 bytes (36 Kb)
+opened URL
+==================================================
+downloaded 36 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/rstudioapi_0.2.tgz'
+Content type 'application/x-gzip' length 22508 bytes (21 Kb)
+opened URL
+==================================================
+downloaded 21 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/jsonlite_0.9.14.tgz'
+Content type 'application/x-gzip' length 895682 bytes (874 Kb)
+opened URL
+==================================================
+downloaded 874 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/roxygen2_4.1.0.tgz'
+Content type 'application/x-gzip' length 360981 bytes (352 Kb)
+opened URL
+==================================================
+downloaded 352 Kb
+
+trying URL 'http://cran.rstudio.com/bin/macosx/mavericks/contrib/3.1/devtools_1.7.0.tgz'
+Content type 'application/x-gzip' length 296811 bytes (289 Kb)
+opened URL
+==================================================
+downloaded 289 Kb
+
+
+The downloaded binary packages are in
+	/var/folders/43/fngz11tj3tqbbpsf8n83swq00000gn/T//Rtmp7qrWY3/downloaded_packages
+> library(devtools)
+> install_github("jennybc/gapminder")
+Downloading github repo jennybc/gapminder@master
+Installing gapminder
+'/Library/Frameworks/R.framework/Resources/bin/R' --vanilla CMD INSTALL  \
+  '/private/var/folders/43/fngz11tj3tqbbpsf8n83swq00000gn/T/Rtmp7qrWY3/devtools4847245360f/jennybc-gapminder-7e5350a'  \
+  --library='/Library/Frameworks/R.framework/Versions/3.1/Resources/library' --install-tests 
+
+* installing *source* package ‘gapminder’ ...
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+* DONE (gapminder)
+> library(gapminder)
+> data(gapminder)
+> head(gapminder)
+      country continent year lifeExp      pop gdpPercap
+1 Afghanistan      Asia 1952  28.801  8425333  779.4453
+2 Afghanistan      Asia 1957  30.332  9240934  820.8530
+3 Afghanistan      Asia 1962  31.997 10267083  853.1007
+4 Afghanistan      Asia 1967  34.020 11537966  836.1971
+5 Afghanistan      Asia 1972  36.088 13079460  739.9811
+6 Afghanistan      Asia 1977  38.438 14880372  786.1134
+> 

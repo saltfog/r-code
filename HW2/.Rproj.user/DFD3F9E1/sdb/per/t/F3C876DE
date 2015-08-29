@@ -1,0 +1,16 @@
+{
+    "contents" : "dat <- read.csv(\"femaleMiceWeights.csv\")\ndat[1:12,2]\ndat[13:24,2]\nmean(dat[13:24,2]) - mean(dat[1:12,2])\n\ns = split(dat[,2], dat[,1])\nstripchart(s, vertical=TRUE, col=1:2)\n\nabline(h=sapply(s, mean), col=1:2)\n\n#new vector for data set\n\nhighfat = s[[\"hf\"]]\nchow = s[[\"chow\"]]\n\nsample(highfat, 6, replace=TRUE) # replaces values with TRUE\nas.numeric(highfat > 30) #converts TRUE to 0 or 1\n\nsum(highfat > 30)\nmean(as.numeric(highfat > 30))\n\npopulation <- read.csv(\"femaleControlsPopulation.csv\") #import data\n\ncontrol <- sample(population[,1],12)\nmean(control)\n\nn <- 10000\nnull <- vector(\"numeric\",n)\nfor(i in 1:n){\n  control <- sample(population[,1],12)\n  treatment <- sample(population[,1],12)\n  null[i] <- mean(control) - mean(treatment)\n}\n\nhist(null)\n\nsampleMean = replicate(10000, mean(sample(population, 12)))\nmean(sample(population, 12))\nhead(sampleMean)\n\n\n\ndiff = mean(dat[13:24,2]) - mean(dat[1:12,2])\nhist(diff)\nabline(v=diff, col=\"red\")\nabline(v=-diff, col=\"red\")\n\n#HW2 Distro II\n\nlibrary(devtools)\nevtools::install_github(\"hadley/devtools\")\ninstall_github(\"hadley/devtools\")\ninstall.packages(\"devtools\")\nlibrary(devtools)\ninstall_github(\"jennybc/gapminder\")\nlibrary(gapminder)\ndata(gapminder)\nhead(gapminder)\n\n#vector of Country and lifeExp 1952\nt = gapminder[gapminder$year <= 1952,c(1,4)] #Both country and lifeExp\nx = gapminder[gapminder$year <= 1952,c(1)] #country\ny = gapminder[gapminder$year <= 1952,c(4)] #lifeExp\nhist(y)\nstem(y)\nplot(ecdf(y), do.points=FALSE, verticals=TRUE)\nmean(y <=40) #What is the proportion of countries in 1952 that have a life expectancy less than or equal to 40?\nmean(y <=60) - mean(y <=40) \nmean(y >= 40)\n\n#vector of Country and Population in 1952\nt = gapminder[gapminder$year <= 1952,c(1,5)] #Both country and Population\nhead(t)\nx = gapminder[gapminder$year <= 1952,c(5)] #population\nhist(log10(x), breaks=20)\nsd(log10(x)) #Standard Dev\nqqnorm(x) #Q-Q Plot\n\n#2.2 Standardize the population\n#vector of x of Log10 of 1952 populations\nx = gapminder[gapminder$year <= 1952, c(5)]\nx <- log10(x) #new Log10 vector\nqqnorm(x) #Q-Q Plot\nz <- ((x - mean(x))/sd(x)) #standardize the population vector\nqqnorm(z) #Q-Q Plot\nabline(0,1)\nmax(z) #z - score\n\n# 2.3 Normal Distrobution Approximation\nx = gapminder[gapminder$year <= 1952, c(5)]\nx <- log10(x) #new Log10 vector\nF = function(q) pnorm(q, mean=mean(x), sd=sd(x))\nn = length(x) #number of countries\n(F(7) - F(6)) * n\nmean(z)\nhead(pnorm(z))\n\n#Problem 2.3\nx = gapminder[gapminder$year <= 1952, c(5)]\nx <- log10(x) #new Log10 vector\nqqnorm(x) #Q-Q Plot\nn = length(x)\nps = ((1:n) - 0.5)/n\nplot(qnorm(ps), sort(x))\nqnorm(ps)\n",
+    "created" : 1438742924506.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2900407427",
+    "id" : "F3C876DE",
+    "lastKnownWriteTime" : 1426925830,
+    "path" : "~/r-code/HW2/HW2.R",
+    "project_path" : "HW2.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -1,0 +1,17 @@
+{
+    "contents" : "\ndata=read.csv(\"All Providers Rdata.csv\",header=TRUE)\nhead(data)\nstr(data)\nnames(data)\n\n#Historgram\nhist(data$Percentage)\n\nhist(data$Percentage, breaks=10,\n     col=\"lightblue\",\n     labels=TRUE,\n     ylim=c(0, 2500),\n     xlab=\"Months Served by Months Enrolled Percentage\",\n     ylab=\"Exited Children\",\n     main=\"Frequency Histogram All Programs SFY 14\",\n     xaxt='n')\naxis(side=1, at=seq(0,100, 10))\n\n\n#Normal Distribution\nmean(data$Percentage)\nsd(data$Percentage)\n\npnorm(80, mean = 87, sd = 18.6, lower.tail=FALSE)\n\n",
+    "created" : 1438808343681.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "580493419",
+    "id" : "F6724E15",
+    "lastKnownWriteTime" : 1438811062,
+    "path" : "F:/CASEY JENKINS/SUCCESS Initiative Query/r_script.R",
+    "project_path" : "r_script.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -30,3 +30,4 @@ mean(provider$DDIV$Percentage)
 sd(provider$DDIV$Percentage)
 min(provider$DDIV$Percentage)
 max(provider$DDIV$Percentage)
+

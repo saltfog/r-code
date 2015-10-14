@@ -1,0 +1,16 @@
+{
+    "contents" : "#read in CSV file\n\ntab = read.csv(\"msleep_ggplot2.csv\")\nclass(tab)\n\nhead(tab)\ndim(tab)\ncolnames(tab)\ntab$name\ntab$sleep_total\n#Vectors can be combined using the c function. \n#For example, we can add a final number, 1000, to the sleep totals:\nc(tab$sleep_total, 1000)\n\n#ploting\nplot(tab$brainwt, tab$sleep_total)\nplot(tab$brainwt, tab$sleep_total, log=\"x\")\n\n#Summary\nsummary(tab$sleep_total)\n\n#subsetting data\ntab[ c(1,2), ]\ntab[ tab$sleep_total > 18, ]\nplot(tab$sleep_total > 18,)\ntab$sleep_total[ c(1,2) ]\ntab$sleep_total[ c(1,2) > 18]\nmean(tab$sleep_total[ c(1,2)] > 18, rm.na = true)\ntab$sleep_total[ c(1,2) ] >18\nmean(19.7,19.4,19.9,18.1)\n\n#which\nwhich(tab$sleep_total > 18)\ntab$sleep_total[ which(tab$sleep_total > 18)[1] & which(tab$sleep_rem <3)[1]]\ntab[c(1)]\n\n#sorting, order, rank, merge\nsort(tab$sleep_total)\norder(tab$sleep_total)\ntab[order(tab$sleep_total),1:6] #least amount of sleep\n\nrank(c(1,2,2,3))\n\ntab[rank(tab$sleep_total),1]\n\nidx = match(c(\"Cow\",\"Owl monkey\",\"Cheetah\"), tab$name)\ntab[idx]\n\n#create vector\nvec = c()\nvec = c(tab$order)\nfac = factor(vec)\nfac\nfac == \"Rodentia\"\nlevels(fac)\n\n#count instances if column\ntable(tab$order)\n\nfac2 = factor(vec1, levels=c(tab$order))\nfac2\nlevels(fac2)\n\n#split\ns = split(tab$sleep_total, tab$order)\ns\ntapply(tab$sleep_total, tab$order, mean)\ns[[\"Primates\"]]\nsapply(s,sd)\n",
+    "created" : 1442492495276.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1986376738",
+    "id" : "C4F3B67",
+    "lastKnownWriteTime" : 1426040447,
+    "path" : "~/r-code/HW1/HW1.R",
+    "project_path" : "HW1.R",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_source"
+}

@@ -103,3 +103,4 @@ n = length(x)
 ps = ((1:n) - 0.5)/n
 plot(qnorm(ps), sort(x))
 qnorm(ps)
+

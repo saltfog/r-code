@@ -24,7 +24,6 @@ axis(side=1, at=seq(0,100, 10),
      text(50, 47, "Total Exited: 61",
           cex = .8)
 
-
 #Normal Distribution
 mean(provider$Central$Percentage)
 sd(provider$Central$Percentage)

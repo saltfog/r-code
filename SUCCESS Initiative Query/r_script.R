@@ -6,7 +6,7 @@ str(data_2013)
 names(data_2013)
 
 #Historgram
-hist(data_2013$Percentage)
+#hist(data_2013$Percentage)
 
 hist(data_2013$Percentage, breaks=10,
      #probability = TRUE,
@@ -15,7 +15,9 @@ hist(data_2013$Percentage, breaks=10,
      ylim=c(0, 2500),
      xlab="Months Served by Months Enrolled (percent)",
      ylab="Exited Children",
-     main="Engaged Participation in Early Intervention Services for Children Exiting in SFY13",
+     main="Engaged Participation 
+     in Early Intervention Services for 
+     Children Exiting in SFY13",
      xaxt='n')
 axis(side=1, at=seq(0,100, 10),
      text(50, 2500, "Average 86.76% / Min 0% / Max 100%",

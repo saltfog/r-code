@@ -5,6 +5,7 @@ data_2013[is.na(data_2013)] <- 0
 head(data_2013)
 str(data_2013)
 names(data_2013)
+typeof(data_2013)
 
 provider <- split(data_2013, data_2013$Provider)
 data_2013[is.na(data_2013)] <- 0

@@ -53,3 +53,6 @@ ggplot(data=data_2013, aes(data_2013$Months.Served)) +
   labs(x="Months Served", y="Child Count")
 
 
+ggplot(data_2013, aes(x = data_2013$Months.Served, y = data_2013$Months.Enrolled)) + geom_point()
+
+

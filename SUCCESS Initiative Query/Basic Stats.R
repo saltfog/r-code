@@ -34,6 +34,9 @@ sd(data_2013$Months.Enrolled)
 
 ggplot(data=data_2013, aes(data_2013$Months.Enrolled)) + 
   geom_histogram(breaks=seq(0, 40, by =1), 
-                 col="red", 
+                 col="gray", 
                  aes(fill=..count..)) +
-  scale_fill_gradient("Count", low = "green", high = "red")
+  scale_fill_gradient("Count", low = "green", high = "red") +
+  geom_density(col=2) + labs(title="Histogram for Months Enrolled") +
+  labs(x="Months Served", y="Child Count")
+

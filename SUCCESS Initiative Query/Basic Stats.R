@@ -51,6 +51,7 @@ qplot(data_2013$Months.Enrolled,
       xlim=c(0,40))
 
 mean(data_2013$Months.Enrolled)
+mean(data_2013$Months.Served)
 sd(data_2013$Months.Enrolled)
 
 points(seq(min(data_2013$Months.Enrolled), max(data_2013$Months.Enrolled), length.out=500),
@@ -78,6 +79,15 @@ ggplot(data=data_2013, aes(data_2013$Months.Served)) +
   scale_y_continuous(breaks=seq(0,350,10)) +
   labs(x="Months Served", y="Child Count")
 
+ggplot(data=data_2013, aes(data_2013$Age.at.Exit)) + 
+  geom_histogram(breaks=seq(0, 40, by =1), 
+                 col="gray",
+                 labels=TRUE,
+                 aes(fill=..count..)) +
+  scale_fill_gradient("Count", low = "gray", high = "blue") +
+  geom_density(col=1) + labs(title="Histogram for Exit Age SFY13") + scale_x_continuous(breaks=seq(0,36,1)) +
+  scale_y_continuous(breaks=seq(0,1500,100)) +
+  labs(x="Months Served", y="Child Count")
 
 ggplot(data_2013, aes(x = data_2013$Months.Served, y = data_2013$Months.Enrolled)) + geom_point()
 

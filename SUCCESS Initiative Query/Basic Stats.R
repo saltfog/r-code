@@ -52,6 +52,7 @@ qplot(data_2013$Months.Enrolled,
 
 mean(data_2013$Months.Enrolled)
 mean(data_2013$Months.Served)
+mean(data_2013$Age.at.Exit)
 sd(data_2013$Months.Enrolled)
 
 points(seq(min(data_2013$Months.Enrolled), max(data_2013$Months.Enrolled), length.out=500),

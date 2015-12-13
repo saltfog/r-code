@@ -10,18 +10,6 @@ library(sm)
 # Read in the data
 data_2013=read.csv("SUCCESS Initiative Query SFY 13.csv",header=TRUE)
 
-# Set up the x y variables
-enrolled <- (data_2013$Months.Enrolled)
-served <- (data_2013$Months.Served)
-exitcode <- (data_2013$Federal.Code)
-exitreason <-(data_2013$Federal.Exit.Reason)
-
-# Set up the x y variables
-enrolled <- (data_2013$Months.Enrolled)
-served <- (data_2013$Months.Served)
-exitcode <- (data_2013$Federal.Code)
-exitreason <-(data_2013$Federal.Exit.Reason)
-exitage <- (data_2013$Age.at.Exit)
 
 mean(exitage)
 mean(enrolled)
@@ -105,4 +93,19 @@ title(main="Distribution by Exit Reason")
 
 sm.density.compare(enrolled, exitage, xlab="Months Enrolled")
 title(main="Distribution by Exit Age")
+
+data_2007 = read.csv("2007 to now SI.csv")
+summary(data_2007)
+
+# Set up the x y variables
+enrolled <- (data_2007$enrollment_months)
+served <- (data_2007$months_served)
+ggplot(data=data_2007, aes(data_2007$enrollment_months)) + 
+  geom_histogram(breaks=seq(0, 40, by =1), 
+                 col="black", 
+                 aes(fill=..count..)) +
+  scale_fill_gradient("Count", low = "green", high = "red") +
+  geom_density(col=1) + labs(title="Histogram for Months Enrolled SFY07 to SFY15") + scale_x_continuous(breaks=seq(0,36,1)) +
+  scale_y_continuous(breaks=seq(0,25000,100)) +
+  labs(x="Months Enrolled", y="Child Count")
 

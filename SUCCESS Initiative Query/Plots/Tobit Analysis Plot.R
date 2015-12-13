@@ -20,6 +20,8 @@
 #            receive a score of 800, even though it is likely that these students are not "truly" equal in aptitude. 
 #            The same is true of students who answer all of the questions incorrectly. 
 #            All such students would have a score of 200, although they may not all be of equal aptitude.
+library(ggplot2)
+
 
 dat <- read.csv("http://www.ats.ucla.edu/stat/data/tobit.csv")
 dat <- read.csv("Tobit 2013.csv")
@@ -40,4 +42,50 @@ p <- ggplot(dat, aes(x = Months.Enrolled, fill=Race.Ethnicity))
 p + stat_bin(binwidth=1) +
   stat_function(fun = f, size = 1,
                 args = list(var = dat$Months.Enrolled))
+
+
+
+#2007 Data
+
+dat <- read.csv("2007 to now SI.csv",header=TRUE)
+summary(dat)
+
+# function that gives the density of normal distribution
+# for given mean and sd, scaled to be on a count metric
+# for the histogram: count = density * sample size * bin width
+f <- function(x, var, bw = 1) {
+  dnorm(x, mean = mean(var), sd(var)) * length(var)  * bw
+}
+
+# setup base plot
+p <- ggplot(dat, aes(x = dat$race_ethnicity, fill=short_name))
+
+# histogram, coloured by proportion in different programs
+# with a normal distribution overlayed
+p + stat_bin(binwidth=1) +
+  stat_function(fun = f, size = 1,
+                args = list(var = dat$enrollment_months))
+
+
+
+#2007 to 2015 12-13-15 Data
+
+dat <- read.csv("2007 to now SI.csv")
+summary(dat)
+
+# function that gives the density of normal distribution
+# for given mean and sd, scaled to be on a count metric
+# for the histogram: count = density * sample size * bin width
+f <- function(x, var, bw = 1) {
+  dnorm(x, mean = mean(var), sd(var)) * length(var)  * bw
+}
+
+# setup base plot
+p <- ggplot(dat, aes(x = enrollment_months, fill=short_name))
+
+# histogram, coloured by proportion in different programs
+# with a normal distribution overlayed
+p + stat_bin(binwidth=1) +
+  stat_function(fun = f, size = 1,
+                args = list(var = dat$enrollment_months))
 

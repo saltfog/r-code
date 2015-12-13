@@ -32,8 +32,9 @@ f <- function(x, var, bw = 15) {
   dnorm(x, mean = mean(var), sd(var)) * length(var)  * bw
 }
 
+race = Race.Ethnicity = "Black or African American"
 # setup base plot
-p <- ggplot(dat, aes(x = Race.Ethnicity, fill=Months.Enrolled))
+p <- ggplot(dat, aes(x =Months.Enrolled , fill=race))
 
 # histogram, coloured by proportion in different programs
 # with a normal distribution overlayed

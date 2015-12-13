@@ -68,7 +68,7 @@ p + stat_bin(binwidth=1) +
 
 
 
-#2007 to 2015 12-13-15 Data
+#2007 to 2015 12-13-15 Data Months Enrolled
 
 dat <- read.csv("2007 to now SI.csv")
 summary(dat)
@@ -82,6 +82,30 @@ f <- function(x, var, bw = 1) {
 
 # setup base plot
 p <- ggplot(dat, aes(x = enrollment_months, fill=short_name))
+
+# histogram, coloured by proportion in different programs
+# with a normal distribution overlayed
+p + stat_bin(binwidth=1) +
+  stat_function(fun = f, size = 1,
+                args = list(var = dat$enrollment_months))
+
+
+
+#2007 to 2015 12-13-15 Data Gender
+
+dat <- read.csv("2007 to now SI.csv")
+summary(dat)
+
+
+# function that gives the density of normal distribution
+# for given mean and sd, scaled to be on a count metric
+# for the histogram: count = density * sample size * bin width
+f <- function(x, var, bw = 1) {
+  dnorm(x, mean = mean(var), sd(var)) * length(var)  * bw
+}
+
+# setup base plot
+p <- ggplot(dat, aes(x = enrollment_months, fill=gender))
 
 # histogram, coloured by proportion in different programs
 # with a normal distribution overlayed

@@ -66,8 +66,7 @@ ggplot(data=data_2013, aes(data_2013$Months.Enrolled)) +
   scale_fill_gradient("Count", low = "green", high = "red") +
   geom_density(col=1) + labs(title="Histogram for Months Enrolled SFY13") + scale_x_continuous(breaks=seq(0,36,1)) +
   scale_y_continuous(breaks=seq(0,350,10)) +
-  labs(x="Months Enrolled", y="Child Count") +
-lines(density(data_2013$Age.at.Exit, adjust = 2), col = "blue")
+  labs(x="Months Enrolled", y="Child Count")
 
 
 ggplot(data=data_2013, aes(data_2013$Months.Served)) + 

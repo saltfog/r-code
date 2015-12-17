@@ -81,13 +81,13 @@ f <- function(x, var, bw = 1) {
 }
 
 # setup base plot
-p <- ggplot(dat, aes(x = enrollment_months, fill=short_name))
+p <- ggplot(dat, aes(x = months_served, fill=percent))
 
 # histogram, coloured by proportion in different programs
 # with a normal distribution overlayed
 p + stat_bin(binwidth=1) +
   stat_function(fun = f, size = 1,
-                args = list(var = dat$enrollment_months))
+                args = list(var = dat$months_served))
 
 
 

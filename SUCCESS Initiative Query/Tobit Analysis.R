@@ -24,6 +24,8 @@
 dat <- read.csv("http://www.ats.ucla.edu/stat/data/tobit.csv")
 dat <- read.csv("Tobit 2013.csv",header=TRUE)
 summary(dat)
+install.packages("ggplot2") 
+library("ggplot2")
 
 # function that gives the density of normal distribution
 # for given mean and sd, scaled to be on a count metric

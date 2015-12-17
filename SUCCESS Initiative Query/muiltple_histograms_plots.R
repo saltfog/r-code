@@ -3,6 +3,7 @@ set.seed(1233)
 data_2013=read.csv("SUCCESS Initiative Query SFY 13.csv",header=TRUE)
 data1 <- data.frame((data_2013$Months.Served), (data_2013$Months.Enrolled), (data_2013$Age.at.Exit))
 #plot using ggplot2
+install.packages("ggplot2")
 require(ggplot2)
 qplot( var1, data = data1, geom = "density" , group = pop, fill = pop, alpha=.3) + theme_bw( )
 

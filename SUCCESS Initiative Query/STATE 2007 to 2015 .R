@@ -29,6 +29,8 @@ data_2007 = read.csv("2007 to now SI.csv")
 summary(data_2007)
 
 # Set up the x y variables
+install.packages("ggplot2")
+library(ggplot2)
 enrolled <- (data_2007$enrollment_months)
 served <- (data_2007$months_served)
 ggplot(data=data_2007, aes(data_2007$enrollment_months)) + 

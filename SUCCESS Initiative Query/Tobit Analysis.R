@@ -21,10 +21,8 @@
 #            The same is true of students who answer all of the questions incorrectly. 
 #            All such students would have a score of 200, although they may not all be of equal aptitude.
 
-dat <- read.csv("http://www.ats.ucla.edu/stat/data/tobit.csv")
-dat <- read.csv("Tobit 2013.csv",header=TRUE)
+dat <- read.csv("2007 to now SI.csv",header=TRUE)
 summary(dat)
-install.packages("ggplot2") 
 library("ggplot2")
 
 # function that gives the density of normal distribution
@@ -34,7 +32,7 @@ f <- function(x, var, bw = 15) {
   dnorm(x, mean = mean(var), sd(var)) * length(var)  * bw
 }
 
-race = Race.Ethnicity = "Black or African American"
+race = Race.Ethnicity
 # setup base plot
 p <- ggplot(dat, aes(x =Months.Enrolled , fill=race))
 

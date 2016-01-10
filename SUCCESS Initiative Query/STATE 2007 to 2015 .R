@@ -10,7 +10,7 @@ hist(dat$months_served, breaks=5,
      #probability = TRUE,
      col="lightblue",
      labels=TRUE,
-     ylim=c(0, 8000),
+     ylim=c(0, 20000),
      xlab="Months Served by Months Enrolled (percent)",
      ylab="Exited Children",
      main="Engaged Participation 
@@ -44,3 +44,22 @@ ggplot(data=data_2007, aes(data_2007$enrollment_months)) +
   geom_vline(aes(xintercept=mean(data_2007$enrollment_months, na.rm=T)),
              color="blue", linetype="dashed", size=1)
 
+# Percentage
+data_2007 = read.csv("2007 to now SI.csv")
+summary(data_2007)
+
+# Set up the x y variables
+#install.packages("ggplot2")
+library(ggplot2)
+enrolled <- (data_2007$percent)
+served <- (data_2007$months_served)
+ggplot(data=data_2007, aes(data_2007$percent)) + 
+  geom_histogram(breaks=seq(0, 100, by =10), 
+                 col="black", 
+                 aes(fill=..count..)) +
+  scale_fill_gradient("Count", low = "green", high = "red") +
+  geom_density(col=1) + labs(title="Histogram for Months Enrolled SFY07 to SFY15") + scale_x_continuous(breaks=seq(0,100,10)) +
+  scale_y_continuous(breaks=seq(0,25000,1000)) +
+  labs(x="Months Enrolled", y="Child Count") +
+  geom_vline(aes(xintercept=mean(data_2007$percent, na.rm=T)),
+             color="blue", linetype="dashed", size=1)

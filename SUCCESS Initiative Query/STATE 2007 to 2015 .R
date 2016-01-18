@@ -63,3 +63,6 @@ ggplot(data=data_2007, aes(data_2007$percent)) +
   labs(x="Months Enrolled", y="Child Count") +
   geom_vline(aes(xintercept=mean(data_2007$percent, na.rm=T)),
              color="blue", linetype="dashed", size=1)
+
+
+plot(data_2007$gender)

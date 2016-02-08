@@ -9,11 +9,11 @@ print(x)
 
 hist(x)
 
-n <- read.csv("gum_raw_data.csv",header=TRUE)
+n <- read.csv("Gum.csv",header=TRUE)
 
 summary(n)
 mean(n)
 min(n)
 max(n)
 
-scatter.smooth(n, y = NULL)
+plot(n)

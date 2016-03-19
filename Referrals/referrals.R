@@ -155,3 +155,26 @@ sqldf("select providers_child_id, Highest_Delay
 #State wide eligibility not determined Not Used in Eligibility (0)
 sqldf("select providers_child_id, Highest_Delay
       from dd where eligibility_category = 5 and Highest_Delay = 'Not Used in Eligibility'")
+
+#============================================================================================
+
+
+dat <- read.csv("delay-table.csv")
+summary(dat)
+
+
+# function that gives the density of normal distribution
+# for given mean and sd, scaled to be on a count metric
+# for the histogram: count = density * sample size * bin width
+f <- function(x, var, bw = 1) {
+  dnorm(x, mean = mean(var), sd(var)) * length(var)  * bw
+}
+
+# setup base plot
+p <- ggplot(dat, aes(x = eligibility_category, fill=Highest_Delay))
+
+# histogram, coloured by proportion in different programs
+# with a normal distribution overlayed
+p + stat_bin(binwidth=1) +
+  stat_function(fun = f, size = 1,
+                args = list(var = dat$eligibility_category))

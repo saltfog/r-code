@@ -1,6 +1,6 @@
 
 #read in data
-dd=read.csv("delay-table.csv",header=TRUE)
+data=read.csv("delay-table.csv",header=TRUE)
 summary(dd)
 
 #replace string with integers
@@ -171,6 +171,7 @@ f <- function(x, var, bw = 1) {
 }
 
 # setup base plot
+library(gplot)
 p <- ggplot(dat, aes(x = eligibility_category, fill=Highest_Delay))
 
 # histogram, coloured by proportion in different programs
@@ -178,3 +179,22 @@ p <- ggplot(dat, aes(x = eligibility_category, fill=Highest_Delay))
 p + stat_bin(binwidth=1) +
   stat_function(fun = f, size = 1,
                 args = list(var = dat$eligibility_category))
+
+#basic scatter plot
+
+# Set up the x y variables
+eligibilty <- (data$eligibility_category)
+Highest_Level <- (data$Highest_Delay)
+
+# Scatter Plot
+plot(eligibilty, Highest_Level)
+
+# Fit lines
+abline(lm(enrolled~served), col="red")
+lines(lowess(served,enrolled), col="blue")
+
+#Rug Plot
+require(lattice)
+library(Hmisc)
+bwplot(Highest_Level ~ eligibilty, panel=panel.bpplot, probs=seq(.01,.49,by=.01), datadensity=TRUE,
+       col = "red" )

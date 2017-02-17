@@ -9,7 +9,7 @@
 
 fluidPage(
   # Application title
-  titlePanel("As a Man Thinketh Word Cloud"),
+  titlePanel("Book Word Cloud"),
   
   sidebarLayout(
     # Sidebar with a slider and selection inputs

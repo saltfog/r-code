@@ -18,7 +18,7 @@ function(input, output, session) {
     # ...but not for anything else
     isolate({
       withProgress({
-        setProgress(message = "Processing corpus...")
+        setProgress(message = "Processing book...")
         getTermMatrix(input$selection)
       })
     })

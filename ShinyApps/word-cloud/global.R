@@ -3,7 +3,7 @@ library(wordcloud)
 library(memoise)
 
 # The list of valid books
-books <<- list("As a Man Thinketh" = "man", "The Works of Edgar Allan Poe" = "mormon")
+books <<- list("The Miracle of Forginess" = "man")
 
 # Using "memoise" to automatically cache the results
 getTermMatrix <- memoise(function(book) {

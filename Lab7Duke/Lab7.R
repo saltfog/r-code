@@ -88,8 +88,6 @@ plot.ci<-function(results,true.val){
   text(true.val,yR[2],paste("true =",round(true.val,4)),col="royalblue3",pos=3)
 }
 
-plot.ci(results)
-
 #(3 d) The test statistic is -2.4797.
 View(inference.means(no_dups$bty_avg, 5,.1,1))
 
@@ -123,3 +121,4 @@ View(inference.means(no_dups$bty_avg, 5,.1,1))
 #This means that higher confidence levels result in ( narrower ) confidence intervals. 
 #As the degrees of freedom increase, the t-score ( decreases ) . 
 #This means that for the same confidence level, larger degrees of freedom result in ( narrower ) confidence intervals.
+

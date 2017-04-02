@@ -1,7 +1,8 @@
 #volcano plot
+data(teapot)
 data(volcano)
 summary(volcano)
-require(misc3d)
+
 voldf <- local({
   zz <- 7 * volcano
   xx <- 20 * (1:nrow(zz))

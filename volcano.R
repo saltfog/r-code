@@ -7,7 +7,7 @@ voldf <- local({
   zz <- 7 * volcano
   xx <- 20 * (1:nrow(zz))
   yy <- 20 * (1:ncol(zz))
-  surfaceTriangles(xx, yy, zz, color="cyan2")
+  surfaceTriangles(xx, yy, zz, color = "green")
 })
 drawScene(voldf, scale = FALSE)
 

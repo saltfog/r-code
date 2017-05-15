@@ -1,0 +1,10 @@
+name: word-cloud
+title: word-cloud
+account: saltfog
+server: shinyapps.io
+appId: 157427
+bundleId: 743705
+url: https://saltfog.shinyapps.io/word-cloud/
+when: 1489338309.52396
+asMultiple: FALSE
+asStatic: FALSE

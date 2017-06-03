@@ -9,7 +9,7 @@
 
 fluidPage(
   # Application title
-  titlePanel("Book Word Cloud"),
+  titlePanel("Book of Moromon Word Cloud"),
   
   sidebarLayout(
     # Sidebar with a slider and selection inputs

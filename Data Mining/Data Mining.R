@@ -7,10 +7,36 @@
 # • http://mlr.cs.umass.edu/ml/datasets/Diabetes does not exist
 #   https://archive.ics.uci.edu/ml/datasets/diabetes correct location
 
+# Data mining with associated rules.
+
+# The Code field is deciphered as follows: 
+#   
+#   33 = Regular insulin dose 
+#   34 = NPH insulin dose 
+#   35 = UltraLente insulin dose 
+#   48 = Unspecified blood glucose measurement 
+#   57 = Unspecified blood glucose measurement 
+#   58 = Pre-breakfast blood glucose measurement 
+#   59 = Post-breakfast blood glucose measurement 
+#   60 = Pre-lunch blood glucose measurement 
+#   61 = Post-lunch blood glucose measurement 
+#   62 = Pre-supper blood glucose measurement 
+#   63 = Post-supper blood glucose measurement 
+#   64 = Pre-snack blood glucose measurement 
+#   65 = Hypoglycemic symptoms 
+#   66 = Typical meal ingestion 
+#   67 = More-than-usual meal ingestion 
+#   68 = Less-than-usual meal ingestion 
+#   69 = Typical exercise activity 
+#   70 = More-than-usual exercise activity 
+#   71 = Less-than-usual exercise activity 
+#   72 = Unspecified special event
+
 #Needed libraries
 library(arules)
 library(arulesSequences)
 
+##################################  Data Prepartation ##################################
 #read in the data
 diab.df <- read.csv("diab_trans.data", header=TRUE, stringsAsFactors = FALSE)
 
@@ -61,36 +87,43 @@ for (id in unique(diab.df$eventID)) {
 
 unique(out.df$eventID)
 
+################################## Putting the Data into Baskets ##################################
+
 data.df <- out.df
 data.df <- rbind(data.df, subset(diab.df, eventID > 64))
 
 head(subset(data.df, eventID==5803))
-
 data.df.sorted <- data.df[order(data.df["ID"], data.df["time"]),]
 
 write.table(data.df.sorted, "diab_baskets.data", sep = ",", row.names = FALSE, col.names = FALSE)
 write.table(data.df.sorted[,-c(4)], "diab_baskets_novalues.data", sep = ",", row.names = FALSE, col.names = FALSE)
 
 diabSeq <- read_baskets(con = "diab_baskets_novalues.data", sep =",", info = c("sequenceID","eventID"))
-
 seqParam = new ("SPparameter",support = 0.5, maxsize = 4, mingap=600, maxgap =172800, maxlen = 3 )
 patSeq= cspade(diabSeq,seqParam, control = list(verbose = TRUE, tidLists = FALSE, summary= TRUE))
 
+################################## Finding the rules using rule induction ##################################
 #set the confidence at 80% but can be increased to 90%
 seqRules = ruleInduction(patSeq,confidence = 0.8)
 
 length(seqRules)
 #Summary of the sequence rules
 summary(seqRules)
-#inspect the firs 100 rules
-#inspect(head(seqRules,100))
-#inspect all rules 531
-#inspect(seqRules,531)
+#inspect the first 100 rules
+inspect(head(seqRules,100))
 
-#top 10 rules
+#inspect all rules 531
+inspect(seqRules,531)
+
+################################## Summary Ouput ##########################################################
+#top 10 rules by confidence, support and lift.
 inspect(head(sort(seqRules, by=c("confidence", "support")),10))
 inspect(head(sort(seqRules, by=c("support", "confidence")),10))
+inspect(head(sort(seqRules, by ="lift"),10))
+inspect(head(sort(seqRules, by = "lift"),10))
 
+
+#######################################################################################################################
 # Task 2
 # To find the best classifier for a selected dataset.
 # Datasets: • Wine Quality (two sets) - http://archive.ics.uci.edu/ml/datasets/Wine+Quality
@@ -113,7 +146,6 @@ plotcluster(wine, fit1$cluster)
 aggregate(wine,by=list(fit1$cluster),FUN=mean)
 mydata <- data.frame(wine, fit1$cluster)
 
-
 table(fit2$cluster)
 library(fpc)
 plotcluster(wine, fit2$cluster)
@@ -124,7 +156,7 @@ library(cluster)
 clusplot(wine, fit1$cluster, color=TRUE, shade=TRUE,labels=2, lines=0)
 cluster.stats(fit1$cluster, fit2$cluster)
 
-# Task 2 Alterative Regression Trees and Models
+# Task 2 Alterative method Regression Trees and Models
 wine <- read.csv('winequality-white.csv', sep=';', header = TRUE)
 wine <- rbind(wine, read.csv('winequality-red.csv', sep=';', header = TRUE))
 hist(wine$quality)
@@ -152,7 +184,11 @@ p.rpart <- predict(m.rpart, wine_test)
 summary(p.rpart)
 summary(wine_test$quality)
 
+#Summary
+# k-means and regression trees where used mining the wine data set. The classifer method is the regression tree analysis.
+# I could see the predict values vs the actual values
 
+###############################################################################################################################
 #Task 3
 # Aim: Determine the best grouping according to the given evaluation method.
 # • Data Description: http://archive.ics.uci.edu/ml/datasets/Cardiotocography
@@ -162,6 +198,9 @@ summary(wine_test$quality)
 # – The reference grouping is defined  by the Class attribute.
 # – Minimum 10 tests are required.
 
+#clusplot takes about 10min to generate.
+
+##################################  Data Prepartation ##################################
 library(readxl)
 CTG <- read_excel("~/Git-Repos/r-code/Data Mining/CTG-raw.xls")
 
@@ -173,6 +212,7 @@ distC = dist(ctg_noClass)
 card.kmeans = kmeans(distC,10)
 res3 = table(ctg_all$CLASS,card.kmeans$cluster)
 res3
+
 # The Vector Matrix correlates with
 # 1= A	calm sleep
 # 2= B	REM sleep
@@ -185,9 +225,10 @@ res3
 # 9= FS	flat-sinusoidal pattern (pathological state)
 # 10= SUSP	suspect pattern
 
+################################## Clustering and Classes ##################################
 library(fpc)
 library(cluster)
-distance <- dist(ctg_noClass, method = "binary")
+distance <- dist(ctg_noClass, method = "binary") # we use binary matrix being 0 and 1
 
 fit <- kmeans(distance, centers=10)
 res = table(ctg_all$CLASS, fit$cluster )
@@ -216,9 +257,13 @@ res = table(ctg_all$CLASS, fit$cluster )
 clusterTree <- hclust(distance)
 clusters <- cutree(hclust(distance), 10)
 res = table(ctg_all$CLASS, clusters)
+
+View(res)
+
 library(cluster)
 clusplot(ctg_all, clusters, color=TRUE, shade=TRUE,labels=5, lines=0)
 
 cluster.stats(distance, ctg_all$CLASS, fit$cluster)
 
-#Best grouping sleeping classes
+#Summary
+#Best groupings are the sleeping classes based off the clustering analysis

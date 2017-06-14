@@ -120,7 +120,6 @@ inspect(seqRules,531)
 inspect(head(sort(seqRules, by=c("confidence", "support")),10))
 inspect(head(sort(seqRules, by=c("support", "confidence")),10))
 inspect(head(sort(seqRules, by ="lift"),10))
-inspect(head(sort(seqRules, by = "lift"),10))
 
 
 #######################################################################################################################

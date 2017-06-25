@@ -40,4 +40,6 @@ inspect(head(sort(model1, by="support"),10))
 
 inspect(head(sort(model1, by=c("lift", "confidence")),10))
 
-
+arulesViz::plotly_arules(model1, method = "scatterplot", measure = c("support", "confidence", "lift"), shading = "lift")
+arulesViz::plotly_arules(model1, method = "scatterplot", measure = c("support", "confidence", "lift"), shading = "support")
+arulesViz::plotly_arules(model1, method = "scatterplot", measure = c("support", "confidence", "lift"), shading = "confidence")

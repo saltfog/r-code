@@ -1,4 +1,4 @@
-Product code,Bureau of Meteorology station number,Year,Month,Day,Maximum temperature (Degree C),Days of accumulation of maximum temperature,Quality
+Product code,Bureau of Meteorology station number,year,month,day,Maximum temperature (Degree C),Days of accumulation of maximum temperature,Quality
 IDCJAC0010,66124,2006,1,1,44.8,1,Y
 IDCJAC0010,66124,2006,1,2,23.6,1,Y
 IDCJAC0010,66124,2006,1,3,32.7,1,Y

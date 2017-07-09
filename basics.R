@@ -39,3 +39,32 @@ pages # pages is simply 1 to number of pages
 pages[typos.draft2 == 3] # logical extraction. Very useful
 
 (1:length(typos.draft2))[typos.draft2 == max(typos.draft2)] # All combined
+
+x = c(45,43,46,48,51,46,50,47,46,45)
+day=5;
+mean(x[day:(day+4)])
+day:(day+4)
+
+#cumulative maximum
+cummax(x)
+
+#cumulative min
+cummin(x)
+
+whale = c(74, 122, 235, 111, 292, 111, 211, 133, 156, 79)  
+mean(whale)
+var(whale)
+sqrt(var(whale))
+sqrt( sum( (whale - mean(whale))^2 /(length(whale)-1)))
+sd(whale)
+
+#Suppose you keep track of your mileage each time you fill up. At your last 6 fill-ups the mileage was
+#65311 65624 65908 66219 66499 66821 67145 67447
+miles = c(65311, 65624, 65908, 66219, 66499, 66821, 67145, 67447)
+x = diff(miles)
+cat(x)
+
+#Commute Times
+commute <- c(17, 16, 20, 24, 22, 15, 21, 15, 17, 22)
+comute_diff = diff(commute)
+cat(comute_diff)

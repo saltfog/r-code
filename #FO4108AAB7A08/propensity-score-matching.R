@@ -1,10 +1,8 @@
 #propensity score matching
-#propensity score–defined as the probability of receiving the treatment (must be a binary) given the covariates–is a key tool
+#propensity score–defined as the probability of receiving the treatment/or (must be a binary) given the covariates–is a key tool
 #Data Prep
 #Perform the Matching
 #Post Balance Analysis
-
-data(lalonde)
 
 library(readr)
 dat <- read_csv("~/r-code/#FO4108AAB7A08/my_saved_schema.csv")
@@ -22,8 +20,6 @@ age <- function(dob, age.day = today(), units = "year", floor = TRUE) {
 my.dob <- as.Date(dat$age)
 agm <- age(my.dob, units = "months") / 365
 dat$age_in_years <- paste(floor(agm))
-
-cat(dat$age_in_years)
 
 #Change a numeric variables to categorical variables
 # Monthly Income
@@ -57,76 +53,56 @@ dat$goal_one_progress_cat <- cut(dat$goal_one_progress, breaks = c(0,20,30,40,50
 #dat$payments <- paste((dat$saving_payment_amount - dat$MOTZA_payment_amount) - dat$goal_one_target_amount)
 #head(dat$payments)
 
-min(dat$payments)
-max(dat$payments)
-mean(dat$payments)
-summary(dat$payments)
+# min(dat$payments)
+# max(dat$payments)
+# mean(dat$payments)
+# summary(dat$payments)
 
-#dat$quizzes_passed_cat <- cut(dat$quizzes_passed, breaks = c(0,50,150),
-#                              labels = c("<50",">50"), right = FALSE)
-
-#diff days
-#diff_in_days = difftime(datetimes[2], datetimes[1], units = "days") # days
-
-#Need binary data for matching
-
-#dat$adviser <- paste(as.integer(as.logical(dat$adviser)))
-#dat$crew <- paste(as.integer(as.logical(dat$crew)))
-#dat$full_time_work <- paste(as.integer(as.logical(dat$full_time_work)))
-
-library(MatchIt) 
-m.out = matchit(dat$gender ~ dat$age_in_years + dat$goal_one_progress_cat + dat$monthly_income_cat + dat$quizzes_passed_cat
-                + dat$full_time_work + dat$degree + dat$adviser,
-                data = dat, method = "nearest", distance = "logit")
-
+# library(MatchIt) 
+# m.out = matchit(dat$gender ~ dat$age_in_years + dat$goal_one_progress_cat + dat$monthly_income_cat + dat$quizzes_passed_cat
+#                 + dat$full_time_work + dat$degree + dat$adviser,
+#                 data = dat, method = "nearest", distance = "logit")
+# 
 m.out2 = matchit(dat$gender ~ dat$age_in_years + dat$goal_one_progress_cat + dat$monthly_income_cat + dat$quizzes_passed_cat
-                + dat$full_time_work + dat$degree + dat$adviser,
-                data = dat, method = "subclass")
+                 + dat$full_time_work + dat$degree + dat$adviser,
+                 data = dat, method = "subclass")
 
 m.data4 <- match.data(m.out2, subclass = "block", weights = "w", distance = "pscore")
 names(m.data4)
-plot(m.data4$id[8:8],m.data4$pscore[8:8])
+m.data4$pscore <- paste(m.data4$pscore * 100)
 
-m.data1 <- match.data(m.out)
-summary(m.data1)
+final_pscore <- data.frame(m.data4$id, m.data4$last_name, m.data4$pscore)
+library(df2json)
+json <- df2json(final_pscore)
+View(json)
+plot(m.data4$id,m.data4$pscore)
 
-m.data2 <- match.data(m.out, group = "treat")
-summary(m.data2)
-
-m.data3 <- match.data(m.out, group = "control")
-summary(m.data3)
-
-summary(m.out, standardize = TRUE)
-plot(m.out, type = "hist")
-plot(m.out, discrete.cutoff = 5, type = "QQ",
-     numdraws = 5000, interactive = TRUE, which.xs = NULL)
-#plot(m.out, type = "jitter")
-plot(m.out)
-m.data <- match.data(m.out)
-m.data <- match.data(m.out, group = "all", distance = "distance",
-                     weights = "weights", subclass = "subclass")
-summary(m.data, interactions = FALSE, addlvariables = NULL, standardize = FALSE)
+# library(WriteXLS)
+# WriteXLS(dat, "~/r-code/#FO4108AAB7A08/my_saved_schema.csv.xlsx")
 
 
-
-library(Zelig)
-m.data <- match.data(m.out)
-z.out <- zelig(Y ~ m.data$adviser + x1 + x2, model = mymodel, data = m.data)
-
-library(WriteXLS)
-WriteXLS(dat, "~/r-code/#FO4108AAB7A08/my_saved_schema.csv.xlsx")
-
-
-
-
-# weighted diff in means
-weighted.mean(mdata$adviser[mdata$treat == 1], mdata$weights[mdata$treat==1])
-weighted.mean(mdata$re78[mdata$treat==0], mdata$weights[mdata$treat==0])
-
-# weighted least squares without covariates
-zelig(re78 ~ treat, data = m.data, model = "ls", weights = "weights")
-
-zelig(formula = re78 ~ treat, model = "ls", data = m.data, weights =
-          "weights")
-
-
+fn_bal <- function(dat, variable) {
+  dat$variable <- dat[, variable]
+  if (variable == 'gender') dat$variable <- dat$variable / 10^3
+  dat$gender <- as.factor(dat$gender)
+  support <- c(min(dat$variable), max(dat$variable))
+  ggplot(dat, aes(x = m.data4$pscore, y = variable, color = quizzes_passed)) +
+    geom_point(alpha = 0.2, size = 1.3) +
+    geom_smooth(method = "loess", se = F) +
+    xlab("Propensity score") +
+    ylab(variable) +
+    theme_bw() +
+    ylim(support)
+}
+library(MatchIt)
+library(dplyr)
+library(ggplot2)
+library(gridExtra)
+grid.arrange(
+  fn_bal(dat, "quizzes_passed"),
+  fn_bal(dat, "full_time_work") + theme(legend.position = "none"),
+  fn_bal(dat, "goal_one_progress"),
+  fn_bal(dat, "monthly_income") + theme(legend.position = "none"),
+  fn_bal(dat, "gender"),
+  nrow = 3, widths = c(1, 0.8)
+)

@@ -1,13 +1,14 @@
 #propensity score matching
-#propensity score–defined as the probability of receiving the treatment/or (must be a binary) given the covariates–is a key tool
-#Data Prep
+#propensity score–defined as the probability of receiving the treatment/or program etc... (must be a binary) given the covariates–is a key tool
 #Perform the Matching
 #Post Balance Analysis
 
+#Read in the data.
 library(readr)
 dat <- read_csv("~/r-code/#FO4108AAB7A08/my_saved_schema.csv")
 
-#Age convert to years function
+#==================================== Data conversion and clean-up ====================================
+#Age convert to years custom function
 library(lubridate)
 
 age <- function(dob, age.day = today(), units = "year", floor = TRUE) {
@@ -16,7 +17,7 @@ age <- function(dob, age.day = today(), units = "year", floor = TRUE) {
   return(calc.age)
 }
 
-#Return ages
+#Return ages and add them to data frame
 my.dob <- as.Date(dat$age)
 agm <- age(my.dob, units = "months") / 365
 dat$age_in_years <- paste(floor(agm))
@@ -46,47 +47,44 @@ summary(dat$goal_one_progress)
 
 dat$goal_one_progress_cat <- cut(dat$goal_one_progress, breaks = c(0,20,30,40,50,60,70,80,90,100),
                               labels = c("A","B","C","D","E","F","G","H","I"), right = FALSE)
-
-#Goal One Target Amount less Saving Payment Amount and the MOTZA Payment Amount)
-#Payments
-
-#dat$payments <- paste((dat$saving_payment_amount - dat$MOTZA_payment_amount) - dat$goal_one_target_amount)
-#head(dat$payments)
-
-# min(dat$payments)
-# max(dat$payments)
-# mean(dat$payments)
-# summary(dat$payments)
-
-# library(MatchIt) 
-# m.out = matchit(dat$gender ~ dat$age_in_years + dat$goal_one_progress_cat + dat$monthly_income_cat + dat$quizzes_passed_cat
-#                 + dat$full_time_work + dat$degree + dat$adviser,
-#                 data = dat, method = "nearest", distance = "logit")
-# 
+library(MatchIt)
+#Use MatchIt to perform the score matching
 m.out2 = matchit(dat$gender ~ dat$age_in_years + dat$goal_one_progress_cat + dat$monthly_income_cat + dat$quizzes_passed_cat
                  + dat$full_time_work + dat$degree + dat$adviser,
                  data = dat, method = "subclass")
 
 m.data4 <- match.data(m.out2, subclass = "block", weights = "w", distance = "pscore")
 names(m.data4)
+
+#Convert score to percent
 m.data4$pscore <- paste(m.data4$pscore * 100)
 
+#Final Propensity Score by Client Id and Last Name
 final_pscore <- data.frame(m.data4$id, m.data4$last_name, m.data4$pscore)
-library(df2json)
-json <- df2json(final_pscore)
-View(json)
+full_data_frame <- data.frame(m.data4)
+#Convert to Json
+
+json_id_score <- toJSON(final_pscore)
+cat(json_id_score)
+
+library(readr)
+library(jsonlite)
+full_data_frame_toJSON <- toJSON(full_data_frame, method = "C")
+
+#Validation check 
+validate(full_data_frame_toJSON) 
+write_lines(full_data_frame_toJSON, path = "~/r-code/#FO4108AAB7A08/pscore.json")
+
+#Plot all Scores by Client Id
 plot(m.data4$id,m.data4$pscore)
 
-# library(WriteXLS)
-# WriteXLS(dat, "~/r-code/#FO4108AAB7A08/my_saved_schema.csv.xlsx")
-
-
+#Custom function for plotting score by variable
 fn_bal <- function(dat, variable) {
   dat$variable <- dat[, variable]
   if (variable == 'gender') dat$variable <- dat$variable / 10^3
   dat$gender <- as.factor(dat$gender)
   support <- c(min(dat$variable), max(dat$variable))
-  ggplot(dat, aes(x = m.data4$pscore, y = variable, color = quizzes_passed)) +
+  ggplot(dat, aes(x = m.data4$pscore, y = variable)) +
     geom_point(alpha = 0.2, size = 1.3) +
     geom_smooth(method = "loess", se = F) +
     xlab("Propensity score") +
@@ -94,15 +92,21 @@ fn_bal <- function(dat, variable) {
     theme_bw() +
     ylim(support)
 }
+
+#Need libraries
 library(MatchIt)
 library(dplyr)
 library(ggplot2)
 library(gridExtra)
+
+#Score Ploting by variable
 grid.arrange(
   fn_bal(dat, "quizzes_passed"),
-  fn_bal(dat, "full_time_work") + theme(legend.position = "none"),
+  fn_bal(dat, "full_time_work"),
   fn_bal(dat, "goal_one_progress"),
-  fn_bal(dat, "monthly_income") + theme(legend.position = "none"),
+  fn_bal(dat, "monthly_income"),
   fn_bal(dat, "gender"),
   nrow = 3, widths = c(1, 0.8)
 )
+
+

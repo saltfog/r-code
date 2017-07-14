@@ -33,13 +33,9 @@ df$rec<- dplyr::recode(as.character(df$Receiver),"VR2W-121133"=0,"VR2W-112177"=1
 df$Receiver <- as.numeric(df$Receiver)
 
 #exclude day one and last day
-
-
 attach(df)
 df <- df[ which(df$date!='2014-03-11'),]
 df <- df[ which(df$date!='2014-06-19'),]
-#df <- df[ which(df$rec!='420' && df$date >= '2014-04-30')]
-
 
 # Graph
 ggplot(df, aes(x=rec, y=prop)) +

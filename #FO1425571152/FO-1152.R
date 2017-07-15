@@ -35,6 +35,26 @@ colnames(sample_assault_counts)[which(names(sample_assault_counts) == "X1.2")] <
 colnames(sample_assault_counts)[which(names(sample_assault_counts) == "X2.2")] <- "DV_Related_Y"
 colnames(sample_assault_counts)[which(names(sample_assault_counts) == "d4")] <- "Assaults"
 
-
-# Write CSV
 write.csv(sample_assault_counts, file = "~/r-code/#FO1425571152/MyData.csv")
+MyData <- read_csv("~/r-code/#FO1425571152/MyData.csv")
+colnames(MyData)[which(names(MyData) == "X1")] <- "date"
+colnames(MyData)[which(names(MyData) == "X5")] <- "NA"
+
+sample_assault_final <- unique(merge(MyData, sample_assault, by=c("date"), all=TRUE))
+
+WriteXLS(sample_assault_final, "~/r-code/#FO1425571152/sample_assault_final.xlsx")
+
+#Takes a couple of minutes to read in.....
+sample_assault_final <- read_excel("~/r-code/#FO1425571152/sample_assault_final.xlsx", 
+                                   col_types = c("text", "numeric", "numeric", 
+                                                 "numeric", "numeric", "numeric", 
+                                                 "numeric", "numeric", "numeric", 
+                                                 "numeric", "skip", "skip", "skip", 
+                                                 "skip", "numeric", "skip", "skip", 
+                                                 "skip", "skip", "skip", "skip", 
+                                                 "skip", "skip", "skip", "skip", 
+                                                 "skip", "skip", "skip", "skip", 
+                                                 "text", "text", "text"))
+
+sample_assault_final <- unique(sample_assault_final)
+WriteXLS(sample_assault_final, "~/r-code/#FO1425571152/sample_assault_final.xlsx")

@@ -1,0 +1,42 @@
+This is a bit repetitive but ill include everything for this 2nd set of data again even the parts that are exactly the same as the first gig.
+
+The data is transmissions of a sound signal from a transmitter that are detected by receivers at 5 distance intervals
+Date needs to be UTC +10 (2nd column)
+
+- In the receivers column There will be 5 "Receivers" 
+VR2W-110021
+VR2W-111070
+VR2W-110020
+VR2W-112177
+VR2W-121133
+
+
+Each corresponds with the following set distances. 
+Distance
+0m
+190m
+200m
+320m
+420m
+
+so Receiver Distance
+VR2W-110021 - 0
+VR2W-111070	- 190
+VR2W-110020	- 200
+VR2W-112177 - 320
+VR2W-121133 - 420
+
+transmitter code
+A69-1601-25369
+
+Maximum possible transmissions per day from the transmitter is 4768
+Again, the amount of transmissions each receivers varies, some receivers will not detect any transmissions on some days (the further from the transmitter the less likely a receiver will "hear" the signal).
+
+1) The data should all be in UTC+10 (2nd column in csv)
+2) The data runs from the 11/3/14 - the 1/5/14
+3) The data for the first and last day need to be excluded 
+4) Some days have 0 detections and the 0 dectections days should be included in daily proportions ( they will appear as blanks in the data, I guess the best way to deal with that is to code to fill any days for a receiver with a 0. It probably only happens for the data at the distance interval of 320m (VR2W-112177) and 420m (VR2W-121133) but it would be best code to cover all.
+5) If possible eac line should have a laymans description of whats going on, explaining what that line is doing exactly...
+6) Loess curve fitted in similar way to first gig (I can play around with the span etc later though so for now the same defaults or values you went with first up I guess)
+
+Ive attached the data and Ive included my code attempt again. On this one I got up to plotting the points and judging by the first graph you sent you changed the code a fair bit but it might save you time copying/pasting relevent parts of this I guess.

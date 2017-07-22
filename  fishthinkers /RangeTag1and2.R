@@ -2,13 +2,14 @@
 
 library(dplyr)
 library(ggplot2)
+library(plotly)
 library(lubridate)
 
 #=======================Start Range Tag 2===============================
 max_count <- 701
 df0 <- read.csv("~/r-code/ fishthinkers /Rangetag2.csv")
 #second column is UTC+10 which is required time format
-df0$date <- as.Date(df0$Date.and.Time..UTC.10.00.,format="%d/%m/%Y")
+df0$date <- as.Date(df0$DateandTimeUTC1000,format="%d/%m/%Y")
 
 df0 <- df0[,c(3,12)]
 
@@ -31,7 +32,6 @@ df0$rec<- dplyr::recode(as.character(df0$Receiver),"VR2W-121133"=0,"VR2W-112177"
 df0$Receiver <- as.numeric(df0$Receiver)
 
 #exclude day one and last day
-attach(df0)
 df0 <- df0[ which(df0$date!='2014-03-11'),]
 df0 <- df0[ which(df0$date!='2014-06-19'),]
 #=======================End of Range Tag 2===============================
@@ -39,12 +39,11 @@ df0 <- df0[ which(df0$date!='2014-06-19'),]
 #=======================Start Range Tag 1===============================
 max_count <- 4768
 
-library(readr)
 df1 <- read_csv("~/r-code/ fishthinkers /Rangetag1.csv")
 
 #Second column is UTC+10 which is required time format (FYI the formatting is not needed in this case) the count down below takes care
 #of stripping the timestamp
-df1$date <- as.Date(df1$`Date.and.Time.(UTC+10:00)`,format="%d/%m/%Y")
+df1$date <- as.Date(df1$DateandTimeUTC1000, format="%d/%m/%Y")
 
 #Subset the data
 df1 <- df1[,c(3,12)]
@@ -77,32 +76,19 @@ df1$Receiver <- as.numeric(df1$Receiver)
 df1 <- df1[ which(df1$date!='2014-03-11'),]
 df1 <- df1[ which(df1$date!='2014-05-01'),]
 
-#df <- df[ which(df$date!='2014-03-11' - '2014-05-01'),]
-
+d3 <- bind_rows(df0,df1)
 
 #=======================End Range Tag 1===============================
 
 # Graph
 
 
-p1 <- ggplot(df0, aes(x=rec, y=prop)) +
-  geom_smooth(span= 0.9) +
+p3 <- ggplot(d3, aes(x=rec, y=prop)) +
+  geom_smooth(method = 'loess') +
   geom_point() +
-  labs(x="Receiver", y="prop", title="Range Tag 2") + 
+  labs(x="Receiver", y="prop", title="Range Tag 1 and 2") + 
   theme(plot.title = element_text(hjust = 0.5, size = 20) )
 
-p2 <- ggplot(df1, aes(x=rec, y=prop)) +
-  geom_smooth(span= 0.9) +
-  geom_point() +
-  labs(x="Receiver", y="prop", title="Range Tag 1") + 
-  theme(plot.title = element_text(hjust = 0.5, size = 20) )
+p3
 
-p <- ggplot() +
-geom_point(data = df0, aes(x=rec, y=prop), shape = 16) +
-geom_point(data = df1, aes(x=rec, y=prop), colour = 'red', size = 1, shape = 1) +
-labs(x="Receiver", y="prop", title="Range Tag 1 and 2") +
-geom_smooth(span= 0.9) +
-geom_smooth(span=0.9) +
-theme(plot.title = element_text(hjust = 0.5, size = 20) )
-p
-
+write_csv(d3, "~/r-code/ fishthinkers /Rangetag12.csv")

@@ -1,6 +1,5 @@
-
 while(!done.all){
-time.ants<-time.ants+1
+time.ants<-time.ants + 1
 at.anthill<-(site==10)
 done.all<-prod(done)
 done<-ifelse(done,1,
@@ -12,7 +11,7 @@ if(!at.anthill[i] & !carry[i]){
 visited.sites[[i]]<-unique(c(visited.sites[[i]],site[i]))
 total.visited.sites[i]<-length(visited.sites[[i]])}
 }
-site<-ifelse(done,10,
+site <-ifelse(done,10,
 ifelse(carry,10,
 ifelse(at.anthill,sample(1:8,3,replace=T),
 site+(-1)^rbinom(3,1,0.5))))

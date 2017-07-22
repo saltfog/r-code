@@ -1,0 +1,10 @@
+name: iris_prediction
+title: Iris Prediction
+account: saltfog
+server: shinyapps.io
+appId: 198775
+bundleId: 912263
+url: https://saltfog.shinyapps.io/iris_prediction/
+when: 1500755846.54495
+asMultiple: FALSE
+asStatic: FALSE

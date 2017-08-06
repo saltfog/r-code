@@ -1,6 +1,6 @@
 #install.packages("RSQLite")
-#install.packages("XML")
-#install.packages("stringr")
+install.packages("XML")
+install.packages("stringr")
 #install.packages("ggplot2")
 
 library(RSQLite)

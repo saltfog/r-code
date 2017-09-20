@@ -1,6 +1,11 @@
 ---
 title: "Jump Men"
-output: html_notebook
+output:
+  html_document: 
+    fig_caption: yes
+    keep_md: yes
+    self_contained: no
+  html_notebook: default
 ---
 
 ```{r}
@@ -23,7 +28,7 @@ str(df)
 
 ```{r}
 #lets check the integrity of the data missing values, etc...
-is.na(df) # returns TRUE of data is missing
+#is.na(df) # returns TRUE of data is missing
 
 #looks like we have some item_quantity values missing
 ```

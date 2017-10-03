@@ -1,11 +1,13 @@
 ---
 title: "Jump Men"
 output:
+  html_notebook: 
+    code_folding: hide
+    toc: yes
   html_document: 
     fig_caption: yes
     keep_md: yes
     self_contained: no
-  html_notebook: default
 ---
 
 ```{r}
@@ -18,7 +20,6 @@ library(leaflet)
 library(ggplot2)
 #import the data set
 df <- read.csv("~/r-code/jumpmen/CompanyData.csv",stringsAsFactors = FALSE)
-head(df)
 ```
 
 ```{r}

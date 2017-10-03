@@ -1,0 +1,12 @@
+name: Quakes5min
+title: Quakes5min
+username:
+account: saltfog
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 221363
+bundleId: 1007997
+url: https://saltfog.shinyapps.io/Quakes5min/
+when: 1507001180.28343
+asMultiple: FALSE
+asStatic: FALSE

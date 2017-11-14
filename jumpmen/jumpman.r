@@ -65,6 +65,7 @@ leaflet() %>% setView(-73.972887,40.732828,zoom=12) %>% addTiles() %>%
                    lat=~dropoff_lat,lng=~dropoff_lon,weight=1,radius=2,opacity=1,color="Red") %>%
   addLegend("bottomleft",colors =c("Red", "Green"),labels= c("Weekend","Weekday"),opacity = 1)
 
+
 #weekend vs weekday by pickup
 leaflet() %>% setView(-73.972887,40.732828,zoom=12) %>% addTiles() %>%
   addProviderTiles(providers$CartoDB.Positron) %>%
@@ -132,7 +133,7 @@ ggplot(df_unique,aes(x=wday(when_the_delivery_started,label=T),y=delivery_time))
   xlab("Days of the Week")+ylab("Delivery Time") + theme_light()
 
 ggplot(df_unique,aes(x=vehicle_type,y=loading_time))+
-  geom_tile()+
+  geom_col()+
   ggtitle("Loading Time variation across Vehicle Types")+
   xlab("Vehicle Types")+ylab("Loading Time (Hours)") + theme_light()
 

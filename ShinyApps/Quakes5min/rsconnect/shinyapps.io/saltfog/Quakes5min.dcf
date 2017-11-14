@@ -5,8 +5,8 @@ account: saltfog
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 221363
-bundleId: 1031829
+bundleId: 1073985
 url: https://saltfog.shinyapps.io/Quakes5min/
-when: 1508286975.46309
+when: 1510621874.86684
 asMultiple: FALSE
 asStatic: FALSE
